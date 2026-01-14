@@ -1,21 +1,32 @@
 package main
 
-import "fmt"
+import (
+	"TestGoProject/service"
+	"fmt"
+	"os"
+)
 
 func main() {
-	var num int
-	fmt.Print("Введите оценку (0-100) :")
-	fmt.Scan(&num)
-	switch {
-	case num >= 90:
-		fmt.Println("A")
-	case num >= 80:
-		fmt.Println("B")
-	case num >= 70:
-		fmt.Println("C")
-	case num >= 60:
-		fmt.Println("D")
-	default:
-		fmt.Println("F")
+
+	input := "C:/Users/User/GolandProjects/TestGoProject/input.txt"
+	output := "C:/Users/User/GolandProjects/TestGoProject/output.txt"
+
+	prod := service.NewFileProducer(input)
+	pres := service.NewFilePresenter(output)
+	serv := service.NewService(prod, pres)
+
+	err := serv.Run()
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
+	fmt.Println("Записано успешно")
+	fmt.Println(output)
+
+	content, err := os.ReadFile(output)
+	if err != nil {
+		fmt.Println("Ошибка чтения файла", err)
+		return
+	}
+	fmt.Println(string(content))
 }
