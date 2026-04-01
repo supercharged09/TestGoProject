@@ -77,7 +77,7 @@ func TestService(t *testing.T) {
 
 		//pres.Present() не настраивать, он не должен вызываться при ошибке producer
 
-		// Метод вернул ошибку (ожидаемо, т.к producer вернул ошибку)
+		// Метод вернул ошибку (т.к producer вернул ошибку)
 		err := svc.Run()
 		// Проверяем сохраненный результат
 		assert.Error(t, err)
